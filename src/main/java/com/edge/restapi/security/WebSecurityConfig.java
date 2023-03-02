@@ -1,14 +1,9 @@
 package com.edge.restapi.security;
 
-import com.edge.restapi.service.CustomerService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.edge.restapi.paths.ApiPaths;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,7 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
-	private static final String[] AUTH_WHITELIST = {"/hello", "/api/v1/customer/all/"};
+	private static final String[] AUTH_WHITELIST = {ApiPaths.HELLO};
 	@Value("${auth.user}")
 	String auth_user;
 
@@ -48,10 +43,10 @@ public class WebSecurityConfig {
 		return http.csrf().disable()
 				.authorizeHttpRequests( auth -> auth
 	                    .requestMatchers(AUTH_WHITELIST).permitAll()
-	                    .requestMatchers(HttpMethod.GET, "/api/v1/customer/**").hasRole(auth_role_basic)
-	                    .requestMatchers(HttpMethod.POST, "/api/v1/customer/add/").hasRole(auth_role_more)
-	                    .requestMatchers(HttpMethod.PUT, "/api/v1/customer/update/**").hasRole(auth_role_more)
-	                    .requestMatchers(HttpMethod.DELETE, "/api/v1/customer/delete/**").hasRole(auth_role_more)
+	                    .requestMatchers(HttpMethod.GET, ApiPaths.ABOUT_CUSTOMER).hasRole(auth_role_basic)
+	                    .requestMatchers(HttpMethod.POST, ApiPaths.ADD_CUSTOMER).hasRole(auth_role_more)
+	                    .requestMatchers(HttpMethod.PUT, ApiPaths.UPDATE_CUSTOMER).hasRole(auth_role_more)
+	                    .requestMatchers(HttpMethod.DELETE, ApiPaths.DELETE_CUSTOMER).hasRole(auth_role_more)
 	                    .anyRequest().authenticated()
 	            )
 				.httpBasic()

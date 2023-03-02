@@ -23,7 +23,7 @@ public class CustomerController {
 	
 	}
 	
-	@GetMapping("/hello")
+	@GetMapping(ApiPaths.HELLO)
 	public String helloWorld() {		
 		return customerService.helloWorld();
 	}
@@ -40,7 +40,7 @@ public class CustomerController {
 	}
 	
 ////////////////////////////////////////////////////////////////////////////////// Search for a customer by name or ID
-	@RequestMapping(path = ApiPaths.ABOUT_CUSTOMERID , method = RequestMethod.GET)
+	@RequestMapping(path = ApiPaths.ABOUT_CUSTOMER , method = RequestMethod.GET)
 	public Customer getCustomerID(@PathVariable(name = "customerID")long customerID) throws CustomerNotFoundException {
 		return customerService.getCustomerID(customerID);
 	}
@@ -48,7 +48,7 @@ public class CustomerController {
 ////////////////////////////////////////////////////////////////////////////////// Update the details of a customer
 	
 	@RequestMapping(path = ApiPaths.UPDATE_CUSTOMER ,method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Customer updateCustomer(@RequestBody Customer customerToUpdate,@PathVariable(name = "customerID")long customerID) throws CustomerException {
+	public Customer updateCustomer(@RequestBody Customer customerToUpdate, @PathVariable(name = "customerID")long customerID) throws CustomerException {
 		return customerService.updateCustomer(customerID, customerToUpdate);
 	}
 	
